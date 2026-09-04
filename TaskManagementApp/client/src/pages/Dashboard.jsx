@@ -7,16 +7,16 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('All'); // Options: 'All', 'Pending', 'InProgress', 'Completed'
     const navigate = useNavigate();
-
-    const completedCount = tasks.filter(t => t.status === 1 || t.status === 'Completed').length;
-    const inProgressCount = tasks.filter(t => t.status === 2 || t.status === 'InProgress').length;
+    
     const pendingCount = tasks.filter(t => t.status === 0 || t.status === 'Pending').length;
+    const inProgressCount = tasks.filter(t => t.status === 1 || t.status === 'InProgress').length;
+    const completedCount = tasks.filter(t => t.status === 2 || t.status === 'Completed').length;
 
     const filteredTasks = tasks.filter((task) => {
         if (filter === 'All') return true;
         if (filter === 'Pending') return task.status === 0 || task.status === 'Pending';
-        if (filter === 'InProgress') return task.status === 2 || task.status === 'InProgress';
-        if (filter === 'Completed') return task.status === 1 || task.status === 'Completed';
+        if (filter === 'InProgress') return task.status === 1 || task.status === 'InProgress';
+        if (filter === 'Completed') return task.status === 2 || task.status === 'Completed';
         return true;
     });
 
@@ -146,7 +146,7 @@ export default function Dashboard() {
                                     )}
                                     {task.dueDate && (
                                         <p className="text-xs text-indigo-400 pt-1">
-                                            Due: {new Date(task.dueDate).toLocaleString()}
+                                            Due: {new Date(task.dueDate).toLocaleDateString()}
                                         </p>
                                     )}
                                 </div>
